@@ -26,26 +26,22 @@ export default function Filters({ filters }) {
             />
           ))}
       </div>
-      <div className=" flex flex-col items-start gap-3 justify-center">
+      <div className=" flex flex-col items-start gap-3 justify-center ">
         <span>Enter a price range</span>
-        <div className="flex items-center justify-start gap-2">
-          <div className="relative">
-            <span className=" absolute top-0 left-0 translate-x-4 translate-y-3">
-              &#8377;
-            </span>
+        <div className="flex items-center justify-center gap-2 w-[250px] ">
+          <div className="flex items-start justify-between gap-1 border px-2 py-3 w-full">
+            <span>&#8377;</span>
             <input
               type="number"
-              className="border border-solid rounded-md text-center px-3 py-2 w-[100px] "
+              className="border-0 border-transparent outline-none rounded-md text-center px-2 w-20  "
             />
           </div>
           <span>to</span>
-          <div className="relative">
-            <span className=" absolute top-0 left-0 translate-x-4 translate-y-3">
-              &#8377;
-            </span>
+          <div className="flex items-start justify-between gap-1 border px-2 py-3 w-full">
+            <span>&#8377;</span>
             <input
               type="number"
-              className="border border-solid rounded-md text-center px-3 py-2 w-[100px] "
+              className="border-0 border-transparent outline-none rounded-md text-center px-2 w-20 "
             />
           </div>
         </div>

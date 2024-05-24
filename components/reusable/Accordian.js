@@ -30,6 +30,32 @@ function Accordion({ title, options, filter }) {
     router.push(`${path}?${params.toString()}`);
   };
 
+  function handleFilterButtonClick(id, clicked) {
+    const params = new URLSearchParams(window.location.search);
+    let variants = params.get("variants")
+      ? params.get("variants").split(",").map(Number)
+      : [];
+
+    if (clicked) {
+      variants.push(id);
+    } else {
+      variants = variants.filter((variantId) => variantId !== id);
+    }
+
+    if (variants.length) {
+      params.set("variants", variants.join(","));
+    } else {
+      params.delete("variants");
+    }
+
+    const queryString = params.toString();
+
+    // Assuming your button has an id attribute, replace "buttonId" with your button's id
+    document.getElementById("buttonId").addEventListener("click", function () {
+      window.location.href = `${window.location.pathname}?${queryString}`;
+    });
+  }
+
   const [toggle, setToggle] = useState(true);
   return (
     <div className="  flex-col flex gap-3 bg-white py-3 px-4 border-b  border-slate-600 relative    ">
@@ -68,9 +94,11 @@ function Accordion({ title, options, filter }) {
                     <label className="flex items-center justify-start gap-2 cursor-pointer">
                       <input
                         onChange={(e) =>
-                          handleFilterClick(filterItem.id, e.target.checked)
+                          handleFilterButtonClick(filterItem.id, e.target.value)
                         }
                         type="button"
+                        id="buttonId"
+                        value="applyFilter"
                         className="p-2 border w-4 h-4 border-slate-500 ring-1 rounded-full  hover:ring-offset-1"
                         style={{ backgroundColor: filterItem.hex_code }}
                       ></input>
