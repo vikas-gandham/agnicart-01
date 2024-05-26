@@ -28,6 +28,26 @@ function Accordion({ title, options, filter }) {
     }
 
     router.push(`${path}?${params.toString()}`);
+
+    updateCheckboxState(id, checked);
+  };
+
+  const updateCheckboxState = (id, checked) => {
+    const checkbox = document.getElementById(`checkbox_${id}`);
+    if (checkbox) {
+      checkbox.checked = checked;
+    }
+  };
+
+  window.onload = () => {
+    const params = new URLSearchParams(window.location.search);
+    const variantsParam = params.get("variants");
+    if (variantsParam) {
+      const variants = variantsParam.split(",").map(Number);
+      variants.forEach((id) => {
+        updateCheckboxState(id, true);
+      });
+    }
   };
 
   function handleFilterButtonClick(id, clicked) {
