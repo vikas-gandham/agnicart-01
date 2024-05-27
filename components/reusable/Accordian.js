@@ -7,9 +7,13 @@ function Accordion({ title, options, filter }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const path = usePathname();
+  const params = new URLSearchParams(searchParams);
+  const variants = searchParams.get("variants");
+
+  const selectedVariants =
+    variants && variants.split(",").map((item) => Number(item));
 
   const handleFilterClick = (id, checked) => {
-    const params = new URLSearchParams(searchParams);
     console.log(params, "params");
     let variants = params.get("variants")
       ? params.get("variants").split(",").map(Number)
@@ -28,53 +32,7 @@ function Accordion({ title, options, filter }) {
     }
 
     router.push(`${path}?${params.toString()}`);
-
-    updateCheckboxState(id, checked);
   };
-
-  const updateCheckboxState = (id, checked) => {
-    const checkbox = document.getElementById(`checkbox_${id}`);
-    if (checkbox) {
-      checkbox.checked = checked;
-    }
-  };
-
-  window.onload = () => {
-    const params = new URLSearchParams(window.location.search);
-    const variantsParam = params.get("variants");
-    if (variantsParam) {
-      const variants = variantsParam.split(",").map(Number);
-      variants.forEach((id) => {
-        updateCheckboxState(id, true);
-      });
-    }
-  };
-
-  function handleFilterButtonClick(id, clicked) {
-    const params = new URLSearchParams(window.location.search);
-    let variants = params.get("variants")
-      ? params.get("variants").split(",").map(Number)
-      : [];
-
-    if (clicked) {
-      variants.push(id);
-    } else {
-      variants = variants.filter((variantId) => variantId !== id);
-    }
-
-    if (variants.length) {
-      params.set("variants", variants.join(","));
-    } else {
-      params.delete("variants");
-    }
-
-    const queryString = params.toString();
-
-    // Assuming your button has an id attribute, replace "buttonId" with your button's id
-    document.getElementById("buttonId").addEventListener("click", function () {
-      window.location.href = `${window.location.pathname}?${queryString}`;
-    });
-  }
 
   const [toggle, setToggle] = useState(true);
   return (
@@ -114,14 +72,20 @@ function Accordion({ title, options, filter }) {
                     <label className="flex items-center justify-start gap-2 cursor-pointer">
                       <input
                         onChange={(e) =>
-                          handleFilterButtonClick(filterItem.id, e.target.value)
+                          handleFilterClick(filterItem.id, e.target.checked)
                         }
-                        type="button"
-                        id="buttonId"
-                        value="applyFilter"
+                        type="checkbox"
+                        // checked={
+                        //   selectedVariants &&
+                        //   selectedVariants.length > 0 &&
+                        //   selectedVariants.includes(filterItem.id)
+                        // }
+                        className=" appearance-none hidden"
+                      />
+                      <div
                         className="p-2 border w-4 h-4 border-slate-500 ring-1 rounded-full  hover:ring-offset-1"
                         style={{ backgroundColor: filterItem.hex_code }}
-                      ></input>
+                      />
                       <span className=" uppercase font-semibold text-slate-600">
                         {filterItem.name}
                       </span>
@@ -154,6 +118,11 @@ function Accordion({ title, options, filter }) {
                         handleFilterClick(filterItem.id, e.target.checked)
                       }
                       type="checkbox"
+                      checked={
+                        selectedVariants &&
+                        selectedVariants.length > 0 &&
+                        selectedVariants.includes(filterItem.id)
+                      }
                     />
 
                     <span className=" uppercase font-semibold text-slate-600">
