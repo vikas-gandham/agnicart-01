@@ -1,15 +1,20 @@
+"use client";
+
 import Link from "next/link";
 import { CiSearch } from "react-icons/ci";
 import { RxPerson } from "react-icons/rx";
 import { PiBagLight } from "react-icons/pi";
 import {
   Popover,
+  Transition,
   PopoverButton,
   PopoverPanel,
-  Transition,
 } from "@headlessui/react";
+import { useState, Fragment } from "react";
 
 export default function Header() {
+  const [popoverStates, setPopoverStates] = useState({});
+
   const items = [
     {
       id: 1743,
@@ -976,20 +981,21 @@ export default function Header() {
     },
   ];
 
-  const subHeadings =
-    items.child_items &&
-    items.child_items.length > 0 &&
-    items.child_items.map((item) => (
-      <div key={item.id}>
-        <h1>{item.title}</h1>
-        {item.child_items.map((item) => (
-          <a key={item.id}>{item.title}</a>
-        ))}
-      </div>
-    ));
+  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+
+  const toggleSideNav = () => {
+    setIsSideNavOpen(!isSideNavOpen);
+  };
+
+  function togglePopover(navlink, show = true) {
+    setPopoverStates((prevState) => ({
+      ...prevState,
+      [navlink]: show,
+    }));
+  }
 
   return (
-    <div className="w-full mx-auto  top-0 left-0 right-0 border-b ">
+    <div className="w-full mx-auto  top-full ">
       <div className="w-full flex items-center justify-between px-6 py-3 bg-[#41c2fc]">
         <div className="flex items-center justify-center gap-2">
           <span className="text-sm text-white font-bold">
@@ -1010,9 +1016,9 @@ export default function Header() {
         </Link>
       </div>
       <div className="flex items-center justify-start  px-4 w-full bg-white border-b ">
-        <div className="flex items-center justify-between gap-[520px] ">
+        <div className="flex items-center justify-start gap-[460px] ">
           <div className="flex items-center justify-center gap-2">
-            <span className=" text-sm text-slate-900  ">
+            <span className=" text-sm text-slate-900 w-[200px]  ">
               Free Shipping on Orders $75+
             </span>
             <Link
@@ -1022,40 +1028,175 @@ export default function Header() {
               Details
             </Link>
           </div>
+          <div className="flex items-center justify-between gap-[600px]">
+            <Link href="/">
+              <img src="/logo.png" alt="" width="150" />
+            </Link>
 
-          <Link href="/">
-            <img src="/logo.png" alt="" width="150" />
-          </Link>
+            <div className="flex items-center justify-center gap-8 ">
+              <div>
+                <CiSearch
+                  onMouseEnter={toggleSideNav}
+                  onMouseLeave={toggleSideNav}
+                  size="1.5rem"
+                  className="hover:border-b border-black delay-300 duration-300 cursor-pointer"
+                />
+                <div
+                  onMouseEnter={toggleSideNav}
+                  onMouseLeave={toggleSideNav}
+                  className={`ease-linear fixed top-24 translate-y-2  bottom-0 right-0 px-10  z-[999] duration-200 delay-200 bg-white flex flex-col gap-8 ${
+                    isSideNavOpen ? `translate-x-0` : `translate-x-[100%]`
+                  } `}
+                >
+                  <div className="border-b py-8 border-black flex items-center justify-center gap-2 w-[350px]">
+                    <CiSearch size="1.5rem" />
+                    <input
+                      type="search"
+                      placeholder="search"
+                      className="w-full outline-none"
+                    />
+                  </div>
+                  <div className="flex flex-col items-start gap-6">
+                    <h1 className=" font-bold">TRENDING SEARCH</h1>
+                    <div className="flex flex-col items-start justify-center gap-4">
+                      <a className="text-sm cursor-pointer">
+                        Women&apos;s Matching Sets
+                      </a>
+                      <a className="text-sm cursor-pointer">
+                        Men&apos;s Short Sleeve Shirts
+                      </a>
+                      <a className="text-sm cursor-pointer">
+                        Women&apos;s Summer Dresses
+                      </a>
+                      <a className="text-sm cursor-pointer">
+                        Men&apos;s Perfect Pima Cotton Tees
+                      </a>
+                      <a className="text-sm cursor-pointer">
+                        Women&apos;s Cropped Jeans
+                      </a>
+                      <a className="text-sm cursor-pointer">
+                        Men&apos;s Shorts
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <RxPerson
+                  onMouseEnter={toggleSideNav}
+                  onMouseLeave={toggleSideNav}
+                  size="1.5rem"
+                  className="hover:border-b border-black delay-300 duration-300 cursor-pointer"
+                />
+                {/* <div
+                  className={`ease-linear fixed top-24 translate-y-2  bottom-0 right-0   z-[1000] duration-200 delay-200 bg-white flex flex-col gap-8 ${
+                    isSideNavOpen ? `translate-x-0` : `translate-x-[100%]`
+                  } `}
+                >
+                  <div className="  mx-auto p-10 bg-black flex flex-col items-center justify-center gap-6 w-[440px] ">
+                    <h1 className="text-white text-4xl">
+                      <strong>EXPRESS</strong> INSIDER
+                    </h1>
+                    <p className="text-white text-sm">
+                      A world of rewards and access.
+                    </p>
+                    <div className="flex items-center justify-center gap-4">
+                      <button className=" border bg-white text-black text-sm px-3 py-2 w-[150px]">
+                        JOIN FOR FREE
+                      </button>
+                      <button className=" border bg-black text-white text-sm px-3 py-2 w-[150px]">
+                        SIGN IN
+                      </button>
+                    </div>
+                    <a className="text-white text-sm underline">Learn More</a>
+                  </div>
+                  <div className="flex flex-col gap-4 p-10">
+                    <h1 className=" font-bold">Help & More</h1>
+                    <div className="flex flex-col gap-2">
+                      <a className="text-slate-800 text-sm">Start a Return</a>
+                      <a className="text-slate-800 text-sm">
+                        Returns and Exchanges Policy
+                      </a>
+                      <a className="text-slate-800 text-sm">Find a Store</a>
+                      <a className="text-slate-800 text-sm">Gift Cards</a>
+                      <a className="text-slate-800 text-sm">Contact us</a>
+                    </div>
+                  </div>
+                </div> */}
+              </div>
 
-          <div className="flex items-center justify-center gap-6">
-            <div className="flex items-center justify-center gap-6  ">
-              <CiSearch size="1.5rem" />
+              <PiBagLight
+                size="1.5rem"
+                className="hover:border-b border-black delay-300 duration-300 cursor-pointer"
+              />
             </div>
-            <RxPerson size="1.5rem" />
-            <PiBagLight size="1.5rem" />
           </div>
         </div>
       </div>
       <div>
-        {items.map((item) => (
-          <Popover key={item.id} className="relative">
-            <PopoverButton className="flex items-center justify-centergap-30">
-              {item.title}
-            </PopoverButton>
-            <Transition
-              enter="transition ease-out duration-200"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-150"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 translate-y-1"
-            >
-              <PopoverPanel anchor="bottom" className="flex flex-col">
-                {subHeadings}
-              </PopoverPanel>
-            </Transition>
-          </Popover>
-        ))}
+        <Popover className="relative flex bg-white justify-center items-center group ">
+          <div className="flex text-sm font-semibold gap-10 justify-center items-center ">
+            {items &&
+              items.map((item) => (
+                <Fragment key={item.id}>
+                  <PopoverButton
+                    className="text-black text-sm uppercase font-bold cursor-pointer py-4 hover:border-b border-black delay-300 duration-300  md:block "
+                    onMouseEnter={() => togglePopover(item.title, true)}
+                    onMouseLeave={() => togglePopover(item.title, false)}
+                  >
+                    {item.title}
+                  </PopoverButton>
+
+                  <Transition
+                    as={Fragment}
+                    show={popoverStates[item.title]}
+                    enter="transition ease-out duration-200"
+                    enterFrom="opacity-0 translate-y-1"
+                    enterTo="opacity-100 translate-y-0"
+                    leave="transition ease-in duration-150"
+                    leaveFrom="opacity-100 translate-y-0"
+                    leaveTo="opacity-0 translate-y-1"
+                  >
+                    <PopoverPanel className="absolute left-1/2 transform -translate-x-1/2 top-full  w-[100%] opacity-100 z-[999]">
+                      <div className="h-px bg-gray-400 w-full "></div>
+                      <div
+                        className="overflow-hidden bg-white w-full shadow-lg ring-1 ring-black/5 flex group-hover:block"
+                        onMouseEnter={() => togglePopover(item.title, true)}
+                        onMouseLeave={() => togglePopover(item.title, false)}
+                      >
+                        <div className="w-[80%] mx-auto ">
+                          <div className="grid grid-cols-4 gap-x-[50px] gap-y-[50px] items-start justify-center">
+                            {item.child_items.map((data) => (
+                              <div key={data.id} className="p-10 space-y-3">
+                                <div className="text-black py-3 text-base font-bold capitalize">
+                                  {data.child_items.length > 0 ? (
+                                    <h1>{data.title}</h1>
+                                  ) : (
+                                    <Link href="/">{data.title}</Link>
+                                  )}
+                                </div>
+
+                                <div className="space-y-2">
+                                  {data?.child_items?.map((subItem) => (
+                                    <div
+                                      key={subItem.id}
+                                      className="text-gray-600 text-sm capitalize hover:text-black "
+                                    >
+                                      <Link href="/">{subItem.title}</Link>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </PopoverPanel>
+                  </Transition>
+                </Fragment>
+              ))}
+          </div>
+        </Popover>
       </div>
     </div>
   );
