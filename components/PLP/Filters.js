@@ -4,7 +4,7 @@ import { CiSearch } from "react-icons/ci";
 export default function Filters({ filters }) {
   return (
     <div className=" sticky top-10 flex flex-col items-start justify-center gap-4 px-6  ">
-      <div className="  flex items-center justify-between mx-auto border border-black border-solid px-1 py-2 w-[250px]">
+      <div className="  flex items-center justify-between border border-black border-solid px-1 py-2 w-full">
         <input
           type="text"
           placeholder="Search"
@@ -28,7 +28,7 @@ export default function Filters({ filters }) {
       </div>
       <div className=" flex flex-col items-start gap-3 justify-center ">
         <span>Enter a price range</span>
-        <div className="flex items-center justify-center gap-2 w-[250px] ">
+        <div className="flex items-center justify-center gap-2 w-full ">
           <div className="flex items-start justify-between gap-1 border px-2 py-3 w-full">
             <span>&#8377;</span>
             <input

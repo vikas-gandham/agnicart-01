@@ -9,6 +9,7 @@ import {
   FaApple,
   FaGooglePlay,
 } from "react-icons/fa";
+import Media from "../reusable/Media";
 
 export default function Footer() {
   const men = [
@@ -308,99 +309,65 @@ export default function Footer() {
   ];
 
   return (
-    <div className="w-full mx-auto bottom-full  bg-white p-[100px] space-y-10 border-t ">
-      <div className="flex items-start justify-center gap-[100px]  ">
-        <div className="flex flex-col items-start justify-center space-y-8">
-          <div className="flex items-center justify-center gap-4">
-            <a className="flex items-center justify-center gap-2  border border-black px-2 py-1 cursor-pointer">
-              <FaApple size="1.5rem" />
-              <div className="flex flex-col items-start justify-center">
-                <span className=" text-[0.5rem] text-slate-800">
-                  Download on the
-                </span>
-                <span className="text-sm font-bold">App Store</span>
-              </div>
-            </a>
-            <a className="flex items-center justify-center gap-2 border border-black px-2 py-1 cursor-pointer">
-              <FaGooglePlay size="1.5rem" />
-              <div className="flex flex-col items-start justify-center">
-                <span className="text-[0.5rem] text-slate-800">Get in on</span>
-                <span className="text-sm font-bold">Google Play</span>
-              </div>
-            </a>
-          </div>
-          <a className=" text-sm cursor-pointer uppercase underline underline-offset-2 font-semibold ">
-            Sign Up For Mobile Alerts
-          </a>
-          <a className=" text-sm cursor-pointer uppercase underline underline-offset-2 font-semibold ">
-            Sign up for email
-          </a>
-          <div className="flex items-center justify-center gap-5">
-            <a className=" cursor-pointer">
-              <FaInstagram size="1.5rem" />
-            </a>
-            <a className=" cursor-pointer">
-              <FaFacebook size="1.5rem" />
-            </a>
-            <a className=" cursor-pointer">
-              <FaTiktok size="1.5rem" />
-            </a>
-            <a className=" cursor-pointer">
-              <FaYoutube size="1.5rem" />
-            </a>
-            <a className=" cursor-pointer">
-              <FaLinkedin size="1.5rem" />
-            </a>
-            <a className=" cursor-pointer">
-              <FaPinterestSquare size="1.5rem" />
-            </a>
-          </div>
+    <div className="w-full md:w-[80%] mx-auto bottom-full  bg-white p-10 space-y-10 border-t relative ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[40px] items-start justify-center  ">
+        <div className="hidden md:block">
+          <Media />
         </div>
-        <div className="space-y-12">
-          <div className="grid grid-cols-4 gap-x-4 gap-y-4">
+        <div className="space-y-24 md:col-span-1 lg:col-span-2 flex flex-col items-center justify-center md:block">
+          <div className="grid  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4 items-start justify-center">
             {men.map((item) => (
               <div key={item.id}>
-                <h1 className=" font-bold">{item.title}</h1>
+                <h1 className=" font-bold capitalize">{item.title}</h1>
                 {item.child_items.map((data) => (
-                  <a key={data.id} className="cursor-pointer">
+                  <Link
+                    key={data.id}
+                    href={data.link}
+                    className="cursor-pointer"
+                  >
                     <p className="text-sm text-slate-600 hover:text-slate-900 hover:underline">
                       {data.title}
                     </p>
-                  </a>
+                  </Link>
                 ))}
               </div>
             ))}
           </div>
-          <div className="flex items-center justify-center gap-2">
-            <a className="text-sm text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
-              Terms & Conditions
-            </a>
-            <span className="text-slate-900">|</span>
-            <a className="text-sm text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
-              Accessibility
-            </a>
-            <span className="text-slate-900">|</span>
-            <a className="text-sm text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
-              About Ads
-            </a>
-            <span className="text-slate-900">|</span>
-            <a className="text-sm text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
-              Privacy Policy
-            </a>
-            <span className="text-slate-900">|</span>
-            <a className="text-sm text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
-              Do Not Sell Or Share My Personal Information
-            </a>
-            <span className="text-slate-900">|</span>
-            <a className="text-sm text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
-              Site Map
-            </a>
-            <span className="text-slate-900">|</span>
-            <a className="text-sm text-slate-900">
-              © 2024 Express. All rights reserved.
-            </a>
+          <div>
+            <div className="block md:hidden">
+              <Media />
+            </div>
           </div>
         </div>
+      </div>
+      <div className="flex items-center justify-center gap-2 lg:absolute right-0 bottom-10">
+        <a className="text-xs text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
+          Terms & Conditions
+        </a>
+        <span className="text-slate-900">|</span>
+        <a className="text-xs text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
+          Accessibility
+        </a>
+        <span className="text-slate-900">|</span>
+        <a className="text-xs text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
+          About Ads
+        </a>
+        <span className="text-slate-900">|</span>
+        <a className="text-xs text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
+          Privacy Policy
+        </a>
+        <span className="text-slate-900">|</span>
+        <a className="text-xs text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
+          Do Not Sell Or Share My Personal Information
+        </a>
+        <span className="text-slate-900">|</span>
+        <a className="text-xs text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
+          Site Map
+        </a>
+        <span className="text-slate-900">|</span>
+        <a className="text-xs text-slate-900">
+          © 2024 Express. All rights reserved.
+        </a>
       </div>
     </div>
   );

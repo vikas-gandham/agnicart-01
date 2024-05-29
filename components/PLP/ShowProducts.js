@@ -125,8 +125,8 @@ export default function ShowProducts({ products }) {
   ];
 
   return (
-    <div className="w-full mx-auto col-span-3">
-      <div className=" grid grid-cols-1 lg:grid-cols-4 gap-4 ">
+    <div className="w-full mx-auto  md:col-span-1 lg:col-span-3">
+      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
         {products &&
           products.length > 0 &&
           products.map((product, i) => {
