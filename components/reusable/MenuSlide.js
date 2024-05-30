@@ -2,6 +2,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import Link from "next/link";
+import RecursiveFunction from "./RecursiveFunction";
 
 export default function MenuSlide() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,7 +11,7 @@ export default function MenuSlide() {
   };
 
   return (
-    <div>
+    <div className=" overflow-y-auto">
       <button onClick={toggleMenu}>
         {menuOpen ? (
           <IoMdClose size="1.4rem" />
@@ -19,11 +20,11 @@ export default function MenuSlide() {
         )}
       </button>
       <div
-        className={`ease-linear fixed top-24 translate-y-2  bottom-0 left-0   z-[999] duration-200 delay-200 bg-white flex flex-col gap-8 ${
+        className={`ease-linear fixed top-20 translate-y-1  bottom-0 left-0   z-[999] duration-200 delay-200 bg-white flex flex-col  ${
           menuOpen ? `-translate-x-0` : `-translate-x-[100%]`
         } `}
       >
-        <div className="  flex gap-2 bg-gray-200 w-[435px]  px-6 py-3 ">
+        <div className="  flex gap-2 bg-gray-200 w-[435px]  px-6 py-4 ">
           <span className=" text-sm text-slate-900 w-[200px]  ">
             Free Shipping on Orders $75+
           </span>
@@ -34,7 +35,8 @@ export default function MenuSlide() {
             Details
           </Link>
         </div>
-        <div className=" flex flex-col items-start justify-center gap-2 text-sm bg-gray-200 w-[435px] px-6 py-3">
+        <RecursiveFunction />
+        <div className=" flex flex-col items-start justify-center gap-4 text-sm bg-gray-200 w-[435px] px-6 py-4">
           <Link href="/">Start a Return</Link>
           <Link href="/">Returns and Exchanges Policy</Link>
           <Link href="/">Find a Store</Link>

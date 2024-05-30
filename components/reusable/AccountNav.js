@@ -18,7 +18,7 @@ export default function AccountNav() {
         className="hover:border-b-2 border-black delay-100 duration-100 cursor-pointer"
       />
       <div
-        className={`ease-linear fixed top-24 translate-y-2  bottom-0 right-0   z-[1000] duration-200 delay-200 bg-white flex flex-col ${
+        className={`ease-linear fixed top-20 translate-y-1  bottom-0 right-0   z-[1000] duration-200 delay-200 bg-white flex flex-col ${
           accountNavOpen ? `translate-x-0` : `translate-x-[100%]`
         } `}
       >

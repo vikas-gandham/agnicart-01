@@ -1,15 +1,7 @@
 import Link from "next/link";
-import {
-  FaInstagram,
-  FaFacebook,
-  FaTiktok,
-  FaYoutube,
-  FaLinkedin,
-  FaPinterestSquare,
-  FaApple,
-  FaGooglePlay,
-} from "react-icons/fa";
+
 import Media from "../reusable/Media";
+import FooterAccordian from "../reusable/FooterAccordian";
 
 export default function Footer() {
   const men = [
@@ -309,13 +301,13 @@ export default function Footer() {
   ];
 
   return (
-    <div className="w-full md:w-[80%] mx-auto bottom-full  bg-white p-10 space-y-10 border-t relative ">
+    <div className=" md:w-[80%] mx-auto bottom-full  bg-white p-10 space-y-10 border-t relative ">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[40px] items-start justify-center  ">
         <div className="hidden md:block">
           <Media />
         </div>
         <div className="space-y-24 md:col-span-1 lg:col-span-2 flex flex-col items-center justify-center md:block">
-          <div className="grid  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4 items-start justify-center">
+          <div className=" hidden md:grid  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4 items-start justify-center">
             {men.map((item) => (
               <div key={item.id}>
                 <h1 className=" font-bold capitalize">{item.title}</h1>
@@ -331,6 +323,15 @@ export default function Footer() {
                   </Link>
                 ))}
               </div>
+            ))}
+          </div>
+          <div className="block md:hidden w-full">
+            {men.map((item) => (
+              <FooterAccordian
+                key={item.id}
+                title={item.title}
+                items={item.child_items}
+              />
             ))}
           </div>
           <div>

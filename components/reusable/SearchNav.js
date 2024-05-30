@@ -16,7 +16,7 @@ export default function SearchNav() {
         className="hover:border-b-2 border-black delay-100 duration-100 cursor-pointer"
       />
       <div
-        className={`ease-linear fixed top-24 translate-y-2  bottom-0 left-0 px-10  z-[999] duration-200 delay-200 bg-white flex flex-col gap-8 ${
+        className={`ease-linear fixed top-20 translate-y-1  bottom-0 left-0 px-10  z-[999] duration-200 delay-200 bg-white flex flex-col gap-8 ${
           searchNavOpen ? `-translate-x-0` : `-translate-x-[100%]`
         } `}
       >

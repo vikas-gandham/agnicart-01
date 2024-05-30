@@ -64,7 +64,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <div>
+      <div className="hidden md:block  py-6">
         <Menu />
       </div>
     </div>
