@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import FooterLinks from "../reusable/FooterLinks";
 import Media from "../reusable/Media";
 import FooterAccordian from "../reusable/FooterAccordian";
 
@@ -301,7 +302,7 @@ export default function Footer() {
   ];
 
   return (
-    <div className=" md:w-[80%] mx-auto bottom-full  bg-white p-10 space-y-10 border-t relative ">
+    <div className=" md:w-[80%] mx-auto bottom-full  bg-white px-10 py-20 space-y-10 border-t relative ">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[40px] items-start justify-center  ">
         <div className="hidden md:block">
           <Media />
@@ -341,35 +342,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center gap-2 lg:absolute right-0 bottom-10">
-        <a className="text-xs text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
-          Terms & Conditions
-        </a>
-        <span className="text-slate-900">|</span>
-        <a className="text-xs text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
-          Accessibility
-        </a>
-        <span className="text-slate-900">|</span>
-        <a className="text-xs text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
-          About Ads
-        </a>
-        <span className="text-slate-900">|</span>
-        <a className="text-xs text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
-          Privacy Policy
-        </a>
-        <span className="text-slate-900">|</span>
-        <a className="text-xs text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
-          Do Not Sell Or Share My Personal Information
-        </a>
-        <span className="text-slate-900">|</span>
-        <a className="text-xs text-slate-600 hover:text-slate-900 hover:underline cursor-pointer">
-          Site Map
-        </a>
-        <span className="text-slate-900">|</span>
-        <a className="text-xs text-slate-900">
-          © 2024 Express. All rights reserved.
-        </a>
-      </div>
+      <FooterLinks />
     </div>
   );
 }

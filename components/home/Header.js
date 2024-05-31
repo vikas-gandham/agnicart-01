@@ -8,7 +8,7 @@ import AccountNav from "../reusable/AccountNav";
 import { PiBagLight } from "react-icons/pi";
 import MenuSlide from "../reusable/MenuSlide";
 
-export default function Header() {
+export default function Header({ menu }) {
   return (
     <div className="w-full mx-auto  top-full ">
       <div className=" hidden w-full md:flex items-center justify-between px-6 py-3 bg-[#41c2fc]">
@@ -45,7 +45,7 @@ export default function Header() {
             </Link>
           </div>
           <div className=" md:hidden flex items-center justify-center gap-3">
-            <MenuSlide />
+            <MenuSlide menu={menu} />
 
             <SearchNav />
           </div>
@@ -65,7 +65,7 @@ export default function Header() {
         </div>
       </div>
       <div className="hidden md:block  py-6">
-        <Menu />
+        <Menu items={menu.theme_settings.mainmenu.items} />
       </div>
     </div>
   );

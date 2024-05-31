@@ -75,11 +75,11 @@ function Accordion({ title, options, filter }) {
                           handleFilterClick(filterItem.id, e.target.checked)
                         }
                         type="checkbox"
-                        // checked={
-                        //   selectedVariants &&
-                        //   selectedVariants.length > 0 &&
-                        //   selectedVariants.includes(filterItem.id)
-                        // }
+                        checked={
+                          selectedVariants &&
+                          selectedVariants.length > 0 &&
+                          selectedVariants.includes(filterItem.id)
+                        }
                         className=" appearance-none hidden"
                       />
                       <div

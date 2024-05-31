@@ -4,7 +4,7 @@ import { IoMdClose } from "react-icons/io";
 import Link from "next/link";
 import RecursiveFunction from "./RecursiveFunction";
 
-export default function MenuSlide() {
+export default function MenuSlide({ menu }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -35,7 +35,7 @@ export default function MenuSlide() {
             Details
           </Link>
         </div>
-        <RecursiveFunction />
+        <RecursiveFunction items={menu.theme_settings.mainmenu.items} />
         <div className=" flex flex-col items-start justify-center gap-4 text-sm bg-gray-200 w-[435px] px-6 py-4">
           <Link href="/">Start a Return</Link>
           <Link href="/">Returns and Exchanges Policy</Link>
