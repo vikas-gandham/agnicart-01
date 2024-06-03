@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CiHeart } from "react-icons/ci";
 import { IoStar } from "react-icons/io5";
 
@@ -12,11 +13,11 @@ export default function Product(props) {
     rating,
     ratingCount,
   } = props;
-
   return (
-    <div
+    <Link
       key={id}
-      className=" flex flex-col items-start justify-center gap-2  group relative   "
+      className=" flex flex-col items-start justify-center gap-2  group relative cursor-pointer   "
+      href={`product/${id}`}
     >
       <img src={img} alt="" />
       <h1 className=" text-start px-2 capitalize font-semibold text-lg">
@@ -48,6 +49,6 @@ export default function Product(props) {
       <span className="border border-white bg-white px-1 py-1 rounded-full top-2 right-4 absolute ">
         <CiHeart size="1.5rem" />
       </span>
-    </div>
+    </Link>
   );
 }

@@ -19,7 +19,7 @@ module.exports = {
       const newUtilities = {
         ".scrollbar-thin": {
           scrollbarWidth: "thin",
-          scrollbarColor: "rgb(31 29 29) white",
+          scrollbarColor: "rgb(112 128 144) white",
         },
         ".scrollbar-webkit": {
           "&::-webkit-scrollbar": {

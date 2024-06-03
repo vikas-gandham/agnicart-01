@@ -30,7 +30,9 @@ async function getFiltersData() {
   }
 }
 
-export default async function Page() {
+export default async function Page(props) {
+  const { params } = props;
+  console.log(props, "props");
   const products = await getProductsData();
   const filters = await getFiltersData();
   return (
