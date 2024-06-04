@@ -26,7 +26,7 @@ export default function Product(props) {
       <p className="text-slate-500 px-2 capitalize line-clamp-1 group-hover:invisible">
         {description}
       </p>
-      <span className=" text-slate-600 absolute bottom-11 left-2   text-xs    invisible  group-hover:visible   font-semibold">
+      <span className=" text-slate-600 absolute bottom-9 left-2   text-xs    invisible  group-hover:visible   font-semibold">
         Size: S,M,L,XL,XX-Large
       </span>
       <div className="flex items-center justify-center gap-0">
@@ -36,7 +36,7 @@ export default function Product(props) {
           &#8377;{reference_price}
         </strike>
       </div>
-      <div>
+      {/* <div>
         {rating && (
           <span className=" flex items-center justify-center gap-1 border border-white bg-white px-2 py-1 rounded-full bottom-32 right-3 absolute ">
             {Array.from({ length: rating }, (i) => (
@@ -45,7 +45,7 @@ export default function Product(props) {
             {ratingCount}
           </span>
         )}
-      </div>
+      </div> */}
       <span className="border border-white bg-white px-1 py-1 rounded-full top-2 right-4 absolute ">
         <CiHeart size="1.5rem" />
       </span>

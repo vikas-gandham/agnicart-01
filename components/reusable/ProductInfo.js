@@ -9,7 +9,7 @@ import { RiSecurePaymentFill } from "react-icons/ri";
 export default function ProductInfo({ data }) {
   return (
     <div className="w-full mx-auto grid grid-cols-5 items-start gap-x-10">
-      <div className="grid grid-cols-2 items-center justify-center col-span-3">
+      <div className="grid grid-cols-2 gap-x-2 gap-y-2 items-center justify-center col-span-3">
         {data.images.map((item) => {
           return <img key={item.id} src={item.image} alt="" />;
         })}

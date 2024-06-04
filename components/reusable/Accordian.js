@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -10,8 +10,13 @@ function Accordion({ title, options, filter }) {
   const params = new URLSearchParams(searchParams);
   const variants = searchParams.get("variants");
 
-  const selectedVariants =
-    variants && variants.split(",").map((item) => Number(item));
+  let selectedVariants;
+
+  console.log(selectedVariants, "selectedVariants");
+  useEffect(() => {
+    selectedVariants =
+      variants && variants.split(",").map((item) => Number(item));
+  }, [variants]);
 
   const handleFilterClick = (id, checked) => {
     console.log(params, "params");
