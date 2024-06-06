@@ -6,7 +6,7 @@ import "rc-pagination/assets/index.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function ShowProducts({ products, totalProducts }) {
+export default function ShowProducts({ products, count }) {
   // const productList = [
   //   {
   //     pid: "3fd0124f",
@@ -129,21 +129,25 @@ export default function ShowProducts({ products, totalProducts }) {
   //     ratingCount: 5,
   //   },
   // ];
-  console.log(products, "products");
-  const [currentPage, setCurrentPage] = useState(1);
 
+  const router = useRouter();
   const path = usePathname();
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
-  const router = useRouter();
+  const page = searchParams.get("page");
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    params.set("page", page);
+  const params = new URLSearchParams(searchParams);
+
+  const handlePageChange = (event) => {
+    const newQuery = { ...searchParams };
+    if (event) {
+      newQuery.page = Number(event);
+    } else {
+      newQuery.page = 1;
+    }
+    params.set("page", newQuery.page);
     router.push(`${path}?${params.toString()}`);
   };
 
-  console.log(products, "products products");
   return (
     <div className="w-full mx-auto  md:col-span-1 lg:col-span-3">
       <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full ">
@@ -156,7 +160,7 @@ export default function ShowProducts({ products, totalProducts }) {
               description={product.slug}
               price={product.price}
               reference_price={product.reference_price}
-              img={product.featured_image_resized}
+              img={product.featured_image}
             />
           ))
         ) : (
@@ -168,8 +172,8 @@ export default function ShowProducts({ products, totalProducts }) {
       <div className="w-full flex items-center justify-center gap-10 p-20">
         <Pagination
           pageSize={20}
-          current={currentPage}
-          total={totalProducts}
+          current={page ? Number(page) : 1}
+          total={Number(count)}
           onChange={handlePageChange}
         />
       </div>

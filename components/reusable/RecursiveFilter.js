@@ -55,7 +55,7 @@ export default function RecursiveFilter({ filters }) {
                   filter={filter}
                 />
               ))}
-            <div className=" flex flex-col items-start gap-3 justify-center ">
+            {/* <div className=" flex flex-col items-start gap-3 justify-center ">
               <span>Enter a price range</span>
               <div className="flex items-center justify-center gap-2 w-full ">
                 <div className="flex items-start justify-between gap-1 border px-2 py-3 w-full">
@@ -77,7 +77,7 @@ export default function RecursiveFilter({ filters }) {
               <button className=" text-white font-semibold border bg-black px-8 py-2 rounded-sm w-[250px]  text-center ">
                 REFINE SEARCH
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

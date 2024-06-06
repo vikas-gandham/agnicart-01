@@ -19,11 +19,11 @@ export default function Product(props) {
       className=" flex flex-col items-start justify-center gap-2  group relative cursor-pointer   "
       href={`product/${id}`}
     >
-      <img src={img} alt="" />
+      <img src={img} alt="" className="w-full h-full " />
       <h1 className=" text-start px-2 capitalize font-semibold text-lg">
         {title}
       </h1>
-      <p className="text-slate-500 px-2 capitalize line-clamp-1 group-hover:invisible">
+      <p className="text-slate-500 px-2 py-2 capitalize line-clamp-1  group-hover:invisible">
         {description}
       </p>
       <span className=" text-slate-600 absolute bottom-9 left-2   text-xs    invisible  group-hover:visible   font-semibold">

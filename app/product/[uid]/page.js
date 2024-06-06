@@ -3,7 +3,7 @@ import PDP from "@/components/PDP/PDP";
 async function getProductInfo(params) {
   try {
     const res = await fetch(
-      `https://devapi.agnicart.com/api/stores/1f0bcd4b/products/${params.uid}/`
+      `https://devapi.agnicart.com/api/stores/8e23257b/products/${params.uid}/`
     );
     if (!res.ok) throw new Error("Something went wrong with fetching Api ");
     const data = await res.json();

@@ -12,14 +12,12 @@ function Accordion({ title, options, filter }) {
 
   let selectedVariants;
 
-  console.log(selectedVariants, "selectedVariants");
   useEffect(() => {
     selectedVariants =
       variants && variants.split(",").map((item) => Number(item));
   }, [variants]);
 
   const handleFilterClick = (id, checked) => {
-    console.log(params, "params");
     let variants = params.get("variants")
       ? params.get("variants").split(",").map(Number)
       : [];
@@ -60,7 +58,7 @@ function Accordion({ title, options, filter }) {
         )}
       </button>
 
-      {filter.id === 168 ? (
+      {filter.id === 308 ? (
         <div
           className={`grid transition-all  duration-300 ease-in-out text-slate-600 text-sm   ${
             toggle ? `grid-rows-[1fr] opacity-100` : `grid-rows-[0fr] opacity-0`

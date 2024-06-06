@@ -1,3 +1,4 @@
+"use client";
 import { IoStar } from "react-icons/io5";
 import { GoShareAndroid } from "react-icons/go";
 import { CiHeart } from "react-icons/ci";
@@ -5,15 +6,12 @@ import { BiSolidOffer } from "react-icons/bi";
 import { FiAward } from "react-icons/fi";
 import { TbBuildingStore } from "react-icons/tb";
 import { RiSecurePaymentFill } from "react-icons/ri";
+import ThumbsGallery from "./ThumbsGallery";
 
 export default function ProductInfo({ data }) {
   return (
     <div className="w-full mx-auto grid grid-cols-5 items-start gap-x-10">
-      <div className="grid grid-cols-2 gap-x-2 gap-y-2 items-center justify-center col-span-3">
-        {data.images.map((item) => {
-          return <img key={item.id} src={item.image} alt="" />;
-        })}
-      </div>
+      <ThumbsGallery data={data} />
       <div className="flex flex-col gap-8 items-start justify-center col-span-2 w-full">
         <div className=" flex flex-col gap-2 w-full">
           <div className="flex items-center justify-between w-full">
@@ -62,21 +60,22 @@ export default function ProductInfo({ data }) {
             <a className=" underline cursor-pointer">Size Chart</a>
           </div>
           <div>
-            {data.variants.map((variant) => (
-              <div
-                key={variant.id}
-                className="flex gap-6 px-6 py-3 overflow-x-auto scrollbar-thin scrollbar-webkit"
-              >
-                {variant.options.map((item) => (
-                  <button
-                    key={item.id}
-                    className="border px-8 py-3 border-black rounded-full "
-                  >
-                    {item.name}
-                  </button>
-                ))}
-              </div>
-            ))}
+            {data &&
+              data.variants.map((variant) => (
+                <div
+                  key={variant.id}
+                  className="flex gap-6 px-6 py-3 overflow-x-auto scrollbar-thin scrollbar-webkit"
+                >
+                  {variant.options.map((item) => (
+                    <button
+                      key={item.id}
+                      className="border px-4 py-3 border-black rounded-full "
+                    >
+                      {item.name}
+                    </button>
+                  ))}
+                </div>
+              ))}
           </div>
           <p className=" text-slate-700">
             Return or exchange not applicable for this item
