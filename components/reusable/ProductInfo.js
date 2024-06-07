@@ -9,10 +9,22 @@ import { RiSecurePaymentFill } from "react-icons/ri";
 import ThumbsGallery from "./ThumbsGallery";
 
 export default function ProductInfo({ data }) {
+  const colors =
+    (data &&
+      data.variants.find((variant) => variant.name === "Color")?.options) ||
+    [];
+
+  const sizes =
+    (data &&
+      data.variants.find((variant) => variant.name === "Sizes")?.options) ||
+    [];
+
   return (
-    <div className="w-full mx-auto grid grid-cols-5 items-start gap-x-10">
-      <ThumbsGallery data={data} />
-      <div className="flex flex-col gap-8 items-start justify-center col-span-2 w-full">
+    <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-5 items-start justify-center gap-x-10 p-4">
+      <div className=" col-span-1 md:col-span-3">
+        <ThumbsGallery data={data} />
+      </div>
+      <div className=" w-full mx-auto flex flex-col gap-8 items-start justify-center col-span-1 md:col-span-2 ">
         <div className=" flex flex-col gap-2 w-full">
           <div className="flex items-center justify-between w-full">
             <h1 className="text-xl font-semibold">Agni Originals</h1>
@@ -36,16 +48,25 @@ export default function ProductInfo({ data }) {
           </div>
           <span className=" text-slate-500">Includes all taxes</span>
         </div>
-        <div className="flex flex-col gap-2">
-          <h1>Lime Green</h1>
-          <a className=" cursor-pointer">
-            <img
-              src={data.featured_image}
-              width="50"
-              height="50"
-              className=" border border-black rounded-full overflow-hidden"
-            />
-          </a>
+        <div className="flex flex-col gap-2 w-full">
+          <h1 className=" text-lg">Color</h1>
+          <ul className=" flex  overflow-x-auto gap-10 whitespace-nowrap scrollbar-thin scrollbar-webkit">
+            {colors &&
+              colors.map((item) => (
+                <li
+                  key={item.id}
+                  className="flex flex-col items-center justify-center gap-2 px-2 py-3   "
+                >
+                  <h1 className="px-2">{item.name}</h1>
+                  <button>
+                    <img
+                      src={item.image}
+                      className=" border border-black rounded-md  w-11 h-11 "
+                    />
+                  </button>
+                </li>
+              ))}
+          </ul>
 
           <div>
             <span className=" text-slate-700">Find your perfect match! </span>
@@ -59,22 +80,15 @@ export default function ProductInfo({ data }) {
             <h1 className=" text-lg">Size</h1>
             <a className=" underline cursor-pointer">Size Chart</a>
           </div>
-          <div>
-            {data &&
-              data.variants.map((variant) => (
-                <div
-                  key={variant.id}
-                  className="flex gap-6 px-6 py-3 overflow-x-auto scrollbar-thin scrollbar-webkit"
+          <div className=" flex gap-6 px-2 py-2 overflow-x-auto scrollbar-thin scrollbar-webkit">
+            {sizes &&
+              sizes.map((item) => (
+                <button
+                  key={item.id}
+                  className="border px-4 py-3 border-black rounded-lg "
                 >
-                  {variant.options.map((item) => (
-                    <button
-                      key={item.id}
-                      className="border px-4 py-3 border-black rounded-full "
-                    >
-                      {item.name}
-                    </button>
-                  ))}
-                </div>
+                  {item.name}
+                </button>
               ))}
           </div>
           <p className=" text-slate-700">

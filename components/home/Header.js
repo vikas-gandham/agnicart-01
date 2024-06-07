@@ -10,10 +10,10 @@ import MenuSlide from "../reusable/MenuSlide";
 import { useEffect, useState } from "react";
 
 export default function Header({ menu }) {
-  const [top, setTop] = useState(true);
+  const [top, setTop] = useState(false);
 
   const scrollHandler = () => {
-    window.scrollY > 250 ? setTop(false) : setTop(true);
+    window.scrollY > 80 ? setTop(true) : setTop(false);
   };
   useEffect(() => {
     window.addEventListener("scroll", scrollHandler);
@@ -22,7 +22,7 @@ export default function Header({ menu }) {
 
   return (
     <div className="w-full mx-auto  top-full ">
-      <div className={`${top ? `block` : `hidden`}`}>
+      <div className={`${top ? `hidden ` : `block`}`}>
         <div className=" hidden w-full md:flex items-center justify-between px-6 py-3 bg-[#41c2fc]">
           <div className=" flex items-center justify-center gap-2">
             <span className="text-sm text-white font-bold">
@@ -76,8 +76,13 @@ export default function Header({ menu }) {
             </div>
           </div>
         </div>
+        <Menu items={menu.theme_settings.mainmenu.items} />
       </div>
-      <div className={`${top ? `block sticky` : `hidden `}`}>
+      <div
+        className={`${
+          top ? `block fixed top-0 right-0 left-0` : `hidden `
+        } bg-white z-[10000] shadow-md pb-2`}
+      >
         <div className="flex items-center justify-between px-4 ">
           <Link href="/">
             <img src="/logo.png" alt="" width="150" />
@@ -85,9 +90,6 @@ export default function Header({ menu }) {
           <Menu items={menu.theme_settings.mainmenu.items} />
           <SideNav />
         </div>
-      </div>
-      <div className="hidden md:block  py-6">
-        <Menu items={menu.theme_settings.mainmenu.items} />
       </div>
     </div>
   );

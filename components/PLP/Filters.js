@@ -5,7 +5,7 @@ import RecursiveFilter from "../reusable/RecursiveFilter";
 export default function Filters({ filters }) {
   return (
     <>
-      <div className=" hidden sticky top-10 md:flex flex-col items-start justify-center gap-4 px-6 lg:col-span-1 ">
+      <div className=" hidden sticky top-32 md:flex flex-col items-start justify-center gap-4 px-6 lg:col-span-1 ">
         <div className="  flex items-center justify-between border border-black border-solid px-1 py-2 ">
           <input
             type="text"

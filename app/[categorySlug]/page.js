@@ -42,7 +42,7 @@ export default async function Page(props) {
   const filters = await getFiltersData();
   console.log(products, "sdsfdfdfgdf");
   return (
-    <div className=" overflow-y-auto max-h-screen no-scrollbar bg-white">
+    <div className="  bg-white">
       <PLP products={products} filters={filters} />
     </div>
   );
