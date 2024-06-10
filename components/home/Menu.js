@@ -5,10 +5,11 @@ import {
   PopoverPanel,
 } from "@headlessui/react";
 import Link from "next/link";
-import { useState, Fragment } from "react";
+import { useState, Fragment, useRef } from "react";
 
 export default function Menu({ items }) {
   const [popoverStates, setPopoverStates] = useState({});
+  
 
   function togglePopover(navlink, show = true) {
     setPopoverStates((prevState) => ({
@@ -17,12 +18,14 @@ export default function Menu({ items }) {
     }));
   }
 
+ 
+
   let parentWithChild;
   let parentWithOutChild;
 
   return (
-    <Popover className="relative flex bg-white justify-center items-center group ">
-      <div className="flex text-sm font-semibold gap-10 justify-center items-center  ">
+    <Popover className=" hidden  relative md:flex bg-white justify-center items-center group ">
+      <div className="flex text-sm font-semibold gap-40 justify-center items-center  ">
         {items &&
           items.map((item) => {
             parentWithChild =
@@ -31,19 +34,22 @@ export default function Menu({ items }) {
               item.child_items.map(
                 (childItems) =>
                   childItems.child_items &&
-                  childItems.child_items.length > 1 &&
-                  childItems.child_items
+                  childItems.child_items.length > 0 &&
+                  childItems
               );
 
             parentWithOutChild =
               item &&
               item.child_items &&
-              item.child_items.find(
+              item.child_items.map(
                 (childItems) =>
-                  childItems.child_items && childItems.child_items.length === 0
+                  childItems.child_items &&
+                  childItems.child_items.length === 0 &&
+                  childItems
               );
 
             console.log(parentWithChild, "parentWithChild");
+            console.log(parentWithOutChild, "parentWithOutChild");
 
             return (
               <Fragment key={item.id}>
@@ -65,7 +71,7 @@ export default function Menu({ items }) {
                   leaveFrom="opacity-100 translate-y-0"
                   leaveTo="opacity-0 translate-y-1"
                 >
-                  <PopoverPanel className="absolute left-1/2 transform -translate-x-1/2 top-full  w-[60%] opacity-100 z-[999]">
+                  <PopoverPanel className="absolute left-1/2 transform -translate-x-1/2 top-full  w-[100%] opacity-100 z-[999]">
                     <div className="h-px bg-gray-400 w-full "></div>
                     <div
                       className="overflow-hidden bg-white w-full shadow-lg ring-1 ring-black/5 flex group-hover:block"

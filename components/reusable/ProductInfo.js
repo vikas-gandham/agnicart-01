@@ -7,6 +7,13 @@ import { FiAward } from "react-icons/fi";
 import { TbBuildingStore } from "react-icons/tb";
 import { RiSecurePaymentFill } from "react-icons/ri";
 import ThumbsGallery from "./ThumbsGallery";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from "@headlessui/react";
+import { ChevronDown } from "lucide-react";
+import { useRef, useState } from "react";
 
 export default function ProductInfo({ data }) {
   const colors =
@@ -18,6 +25,19 @@ export default function ProductInfo({ data }) {
     (data &&
       data.variants.find((variant) => variant.name === "Sizes")?.options) ||
     [];
+
+  const [activeColor, setActiveColor] = useState(colors[0]);
+  const [activeSize, setActiveSize] = useState(sizes[0]);
+  const [isDisclosureOpen, setIsDisclosureOpen] = useState(true);
+  const ref = useRef(null);
+
+  const handleRefClick = (anchorRef) => {
+    isDisclosureOpen &&
+      window.scrollTo({
+        top: anchorRef.current.offsetTop,
+        behavior: "smooth",
+      });
+  };
 
   return (
     <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-5 items-start justify-center gap-x-10 p-4">
@@ -49,19 +69,22 @@ export default function ProductInfo({ data }) {
           <span className=" text-slate-500">Includes all taxes</span>
         </div>
         <div className="flex flex-col gap-2 w-full">
-          <h1 className=" text-lg">Color</h1>
-          <ul className=" flex  overflow-x-auto gap-10 whitespace-nowrap scrollbar-thin scrollbar-webkit">
+          <h1 className=" text-lg">{data.selected_variant_options.Color}</h1>
+          <ul className=" flex  overflow-x-auto gap-4 scrollbar-thin scrollbar-webkit">
             {colors &&
               colors.map((item) => (
-                <li
-                  key={item.id}
-                  className="flex flex-col items-center justify-center gap-2 px-2 py-3   "
-                >
-                  <h1 className="px-2">{item.name}</h1>
-                  <button>
+                <li key={item.id} className=" px-2 py-3    ">
+                  <button
+                    onClick={() => setActiveColor(item)}
+                    className="w-[50px] h-[50px]"
+                  >
                     <img
                       src={item.image}
-                      className=" border border-black rounded-md  w-11 h-11 "
+                      className={`rounded-md  w-11 h-11 ${
+                        activeColor.id === item.id
+                          ? `border-2 border-red-500`
+                          : `border border-black`
+                      } `}
                     />
                   </button>
                 </li>
@@ -85,7 +108,12 @@ export default function ProductInfo({ data }) {
               sizes.map((item) => (
                 <button
                   key={item.id}
-                  className="border px-4 py-3 border-black rounded-lg "
+                  onClick={() => setActiveSize(item)}
+                  className={` px-4 py-3 rounded-lg ${
+                    activeSize.id === item.id
+                      ? `border border-red-500`
+                      : `border border-black `
+                  } `}
                 >
                   {item.name}
                 </button>
@@ -113,6 +141,101 @@ export default function ProductInfo({ data }) {
           </div>
           <span className="text-lg text-orange-500 font-semibold">70% OFF</span>
           <span>Buy Any One Or More Product And Get Flat 70% Off</span>
+        </div>
+        <div className="border px-6 py-4 border-slate-300 w-full">
+          <Disclosure
+            as="div"
+            className="flex flex-col gap-4"
+            defaultOpen={true}
+          >
+            <DisclosureButton className="group flex w-full items-center justify-between">
+              <span className="text-xl font-semibold text-black ">
+                Product Details
+              </span>
+              <ChevronDown className="size-5 group-data-[open]:rotate-180" />
+            </DisclosureButton>
+            <DisclosurePanel className="w-full flex flex-col gap-2">
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Pack Of</h1>
+                <p className="text-slate-500 text-start">1</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Fabric Composition</h1>
+                <p className="text-slate-500">100% Cotton</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Package Contents</h1>
+                <p className="text-slate-500"> 1 - Top</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Specific Pattern</h1>
+                <p className="text-slate-500">Solid</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Stretchable</h1>
+                <p className="text-slate-500">Yes</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Product Type</h1>
+                <p className="text-slate-500"> Top</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Country of Origin</h1>
+                <p className="text-slate-500">India</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Fabric</h1>
+                <p className="text-slate-500"> Cotton</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Knit/Woven</h1>
+                <p className="text-slate-500"> Woven</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Sleeves</h1>
+                <p className="text-slate-500">Half Sleeves</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Occasion</h1>
+                <p className="text-slate-500"> Casual Wear</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Pattern</h1>
+                <p className="text-slate-500"> Solid</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Neckline</h1>
+                <p className="text-slate-500"> Round Neck</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Fit</h1>
+                <p className="text-slate-500">Regular Fit</p>
+              </div>
+              <div className="flex items-start gap-10">
+                <h1 className="w-[40%]">Gender</h1>
+                <p className="text-slate-500">Women</p>
+              </div>
+            </DisclosurePanel>
+          </Disclosure>
+        </div>
+        <div ref={ref} className="border px-6 py-4 border-slate-300 w-full">
+          <Disclosure as="div" defaultOpen={false}>
+            <DisclosureButton
+              onClick={() => {
+                handleRefClick(ref);
+                setIsDisclosureOpen(!isDisclosureOpen);
+              }}
+              className="group flex w-full items-center justify-between"
+            >
+              <span className="text-xl font-semibold text-black ">
+                About Brand
+              </span>
+              <ChevronDown className="size-5 group-data-[open]:rotate-180" />
+            </DisclosureButton>
+            <DisclosurePanel className="mt-2 text-slate-500 ">
+              <div dangerouslySetInnerHTML={{ __html: data.description }} />
+            </DisclosurePanel>
+          </Disclosure>
         </div>
         <div className=" flex items-center justify-around border px-6 py-4 border-slate-300 w-full">
           <div className="flex flex-col items-center justify-center gap-1">

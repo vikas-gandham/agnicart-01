@@ -76,6 +76,7 @@ export default function Header({ menu }) {
             </div>
           </div>
         </div>
+        
         <Menu items={menu.theme_settings.mainmenu.items} />
       </div>
       <div
