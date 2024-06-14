@@ -14,8 +14,14 @@ import {
 } from "@headlessui/react";
 import { ChevronDown } from "lucide-react";
 import { useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function ProductInfo({ data }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const path = usePathname();
+  const params = new URLSearchParams(searchParams);
+
   const colors =
     (data &&
       data.variants.find((variant) => variant.name === "Color")?.options) ||
@@ -25,10 +31,16 @@ export default function ProductInfo({ data }) {
     (data &&
       data.variants.find((variant) => variant.name === "Sizes")?.options) ||
     [];
+  const fit =
+    (data &&
+      data.variants.find((variant) => variant.name === "FIT")?.options) ||
+    [];
 
   const [activeColor, setActiveColor] = useState(colors[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
+  const [activeFit, setActiveFit] = useState(fit[0]);
   const [isDisclosureOpen, setIsDisclosureOpen] = useState(true);
+  const [selectedOptions, setSelectedOptions] = useState({});
   const ref = useRef(null);
 
   const handleRefClick = (anchorRef) => {
@@ -37,6 +49,28 @@ export default function ProductInfo({ data }) {
         top: anchorRef.current.offsetTop,
         behavior: "smooth",
       });
+  };
+
+  const buildUrl = (options) => {
+    const variantParams = Object.keys(options).map((variantName) => {
+      const option = data.variants
+        .find((variant) => variant.name === variantName)
+        .options.find((opt) => opt.id === options[variantName]);
+      return `${variantName}=${option.name}`;
+    });
+
+    return `${path}?${variantParams
+      .map((param) => `variant=${param}`)
+      .join("&")}`;
+  };
+
+  const handleOptionClick = (variantName, optionId) => {
+    setSelectedOptions((prevOptions) => ({
+      ...prevOptions,
+      [variantName]: optionId,
+    }));
+    const newUrl = buildUrl({ ...selectedOptions, [variantName]: optionId });
+    router.push(newUrl);
   };
 
   return (
@@ -68,61 +102,110 @@ export default function ProductInfo({ data }) {
           </div>
           <span className=" text-slate-500">Includes all taxes</span>
         </div>
-        <div className="flex flex-col gap-2 w-full">
-          <h1 className=" text-lg">{data.selected_variant_options.Color}</h1>
-          <ul className=" flex  overflow-x-auto gap-4 scrollbar-thin scrollbar-webkit">
-            {colors &&
-              colors.map((item) => (
-                <li key={item.id} className=" px-2 py-3    ">
-                  <button
-                    onClick={() => setActiveColor(item)}
-                    className="w-[50px] h-[50px]"
-                  >
-                    <img
-                      src={item.image}
-                      className={`rounded-md  w-11 h-11 ${
-                        activeColor.id === item.id
-                          ? `border-2 border-red-500`
-                          : `border border-black`
-                      } `}
-                    />
-                  </button>
-                </li>
-              ))}
-          </ul>
 
-          <div>
-            <span className=" text-slate-700">Find your perfect match! </span>
-            <a href="/" className=" cursor-pointer underline font-semibold">
-              Ask your Expert Advisor
-            </a>
-          </div>
-        </div>
-        <div className="w-full flex flex-col gap-2">
-          <div className="flex items-center justify-between w-full">
-            <h1 className=" text-lg">Size</h1>
-            <a className=" underline cursor-pointer">Size Chart</a>
-          </div>
-          <div className=" flex gap-6 px-2 py-2 overflow-x-auto scrollbar-thin scrollbar-webkit">
-            {sizes &&
-              sizes.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveSize(item)}
-                  className={` px-4 py-3 rounded-lg ${
-                    activeSize.id === item.id
-                      ? `border border-red-500`
-                      : `border border-black `
-                  } `}
-                >
-                  {item.name}
-                </button>
-              ))}
-          </div>
-          <p className=" text-slate-700">
-            Return or exchange not applicable for this item
-          </p>
-        </div>
+        <>
+          {data.variants.map((variant) => (
+            <div key={variant.id} className="flex flex-col gap-2 w-full">
+              <div className="flex items-center justify-between w-full">
+                <h1>
+                  {variant.name === "Color"
+                    ? data.selected_variant_options.Color
+                    : variant.name}
+                </h1>
+                <a className=" underline cursor-pointer">
+                  {variant.name === "Sizes" ? "Size Chart" : ""}
+                </a>
+              </div>
+              {variant.name === "Color" ? (
+                <div className="flex flex-col gap-2 w-full">
+                  <ul className=" flex  overflow-x-auto gap-4 scrollbar-thin scrollbar-webkit">
+                    {colors &&
+                      colors.map((item) => (
+                        <li key={item.id} className=" px-2 py-3    ">
+                          <button
+                            onClick={() => {
+                              handleOptionClick(variant.name, item.id);
+                              setActiveColor(item);
+                            }}
+                            className="w-[50px] h-[50px]"
+                          >
+                            <img
+                              src={item.image}
+                              className={`rounded-md  w-11 h-11 ${
+                                activeColor.id === item.id
+                                  ? `border-2 border-red-500`
+                                  : `border border-black`
+                              } `}
+                            />
+                          </button>
+                        </li>
+                      ))}
+                  </ul>
+
+                  <div>
+                    <span className=" text-slate-700">
+                      Find your perfect match!{" "}
+                    </span>
+                    <a
+                      href="/"
+                      className=" cursor-pointer underline font-semibold"
+                    >
+                      Ask your Expert Advisor
+                    </a>
+                  </div>
+                </div>
+              ) : variant.name === "FIT" ? (
+                <div>
+                  <div className=" flex gap-6 px-2 py-2 overflow-x-auto scrollbar-thin scrollbar-webkit">
+                    {fit &&
+                      fit.map((item) => (
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            handleOptionClick(variant.name, item.id);
+                            setActiveFit(item);
+                          }}
+                          className={` px-4 py-3 rounded-lg ${
+                            activeFit.id === item.id
+                              ? `border border-red-500`
+                              : `border border-black `
+                          } `}
+                        >
+                          {item.name}
+                        </button>
+                      ))}
+                  </div>
+                </div>
+              ) : variant.name === "Sizes" ? (
+                <div className="flex flex-col gap-2 w-full">
+                  <div className=" flex gap-6 px-2 py-2 overflow-x-auto scrollbar-thin scrollbar-webkit">
+                    {sizes &&
+                      sizes.map((item) => (
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            handleOptionClick(variant.name, item.id);
+                            setActiveSize(item);
+                          }}
+                          className={` px-4 py-3 rounded-lg ${
+                            activeSize.id === item.id
+                              ? `border border-red-500`
+                              : `border border-black `
+                          } `}
+                        >
+                          {item.name}
+                        </button>
+                      ))}
+                  </div>
+                  <p className=" text-slate-700">
+                    Return or exchange not applicable for this item
+                  </p>
+                </div>
+              ) : null}
+            </div>
+          ))}
+        </>
+
         <div className=" flex items-center justify-center gap-4">
           <a className="border p-2 rounded-full bg-slate-100 cursor-pointer">
             <GoShareAndroid size="1.5rem" />

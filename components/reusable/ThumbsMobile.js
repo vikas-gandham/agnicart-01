@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -13,6 +13,14 @@ import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 export default function ThumbsMobile({ data }) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [galleryNavOpen, setGalleryNavOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const updateIndex = (swiperInstance) => {
+    if (swiperInstance === null) return;
+    const currentSlide = swiperInstance?.activeIndex;
+    setCurrentIndex(currentSlide);
+  };
+
   const swiperRef = useRef(null);
 
   const handlePrev = () => {
@@ -33,6 +41,10 @@ export default function ThumbsMobile({ data }) {
   const closeGalleryNav = () => {
     setGalleryNavOpen(false);
   };
+
+  useEffect(() => {
+    setCurrentIndex(currentIndex);
+  }, [currentIndex]);
 
   return (
     <>
@@ -71,7 +83,8 @@ export default function ThumbsMobile({ data }) {
                   "--swiper-pagination-color": "#000",
                 }}
                 ref={swiperRef}
-                loop={true}
+                initialSlide={currentIndex}
+                onActiveIndexChange={updateIndex}
                 spaceBetween={10}
                 // navigation={true}
                 thumbs={{ swiper: thumbsSwiper }}
@@ -110,7 +123,6 @@ export default function ThumbsMobile({ data }) {
             <div className="w-[415px] ">
               <Swiper
                 onSwiper={setThumbsSwiper}
-                loop={true}
                 direction="horizontal"
                 spaceBetween={0}
                 slidesPerView={4}
@@ -120,14 +132,21 @@ export default function ThumbsMobile({ data }) {
                 className="mySwiper h-full col-span-1 "
               >
                 {data &&
-                  data.images.map((image) => (
+                  data.images.map((image, index) => (
                     <SwiperSlide key={image.id}>
-                      <div className="">
+                      <button
+                        onClick={() => setCurrentIndex(index)}
+                        className={`${
+                          currentIndex === index
+                            ? `border border-green-500`
+                            : ` `
+                        }`}
+                      >
                         <img
                           src={image.thumbnail}
                           className=" cursor-pointer"
                         />
-                      </div>
+                      </button>
                     </SwiperSlide>
                   ))}
               </Swiper>

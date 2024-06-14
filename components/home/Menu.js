@@ -48,7 +48,7 @@ export default function Menu({ items }) {
                     onMouseEnter={() => togglePopover(item.title, true)}
                     onMouseLeave={() => togglePopover(item.title, false)}
                   >
-                    <div className="w-[80%] mx-auto flex items-center justify-center ">
+                    <div className="w-[80%] mx-auto flex items-start justify-center ">
                       <div className="flex flex-col">
                         {item.child_items.map((data) => (
                           <div key={data.id} className="p-10 space-y-3">

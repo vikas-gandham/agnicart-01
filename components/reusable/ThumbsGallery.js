@@ -1,4 +1,4 @@
-import { React, useRef, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
@@ -14,20 +14,12 @@ import ThumbsMobile from "./ThumbsMobile";
 export default function ThumbsGallery({ data }) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [galleryNavOpen, setGalleryNavOpen] = useState(false);
-  const [activeImage, setActiveImage] = useState(data.images[0]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const [mainSwiperIndex, setMainSwiperIndex] = useState(0);
-  const [thumbnailSwiperIndex, setThumbnailSwiperIndex] = useState(0);
-
-  const handleMainSwiperSlideChange = (swiper) => {
-    setMainSwiperIndex(swiper.activeIndex);
-
-    // setActiveImage(data.images[swiper.activeIndex]);
-  };
-
-  const handleThumbnailSwiperSlideChange = (swiper) => {
-    setThumbnailSwiperIndex(swiper.activeIndex);
-    // setActiveImage(data.images[swiper.activeIndex]);
+  const updateIndex = (swiperInstance) => {
+    if (swiperInstance === null) return;
+    const currentSlide = swiperInstance?.activeIndex;
+    setCurrentIndex(currentSlide);
   };
 
   const swiperRef = useRef(null);
@@ -50,6 +42,10 @@ export default function ThumbsGallery({ data }) {
   const closeGalleryNav = () => {
     setGalleryNavOpen(false);
   };
+
+  useEffect(() => {
+    setCurrentIndex(currentIndex);
+  }, [currentIndex]);
 
   return (
     <>
@@ -77,15 +73,7 @@ export default function ThumbsGallery({ data }) {
               <div className=" col-span-1 h-[600px]">
                 <Swiper
                   onSwiper={setThumbsSwiper}
-                  loop={true}
                   direction="vertical"
-                  onSlideChange={() => {
-                    handleThumbnailSwiperSlideChange;
-                    console.log(
-                      handleThumbnailSwiperSlideChange,
-                      "handleThumbnailSwiperSlideChange"
-                    );
-                  }}
                   spaceBetween={10}
                   slidesPerView={7}
                   freeMode={true}
@@ -94,12 +82,12 @@ export default function ThumbsGallery({ data }) {
                   className="mySwiper h-full col-span-1 "
                 >
                   {data &&
-                    data.images.map((image) => (
+                    data.images.map((image, index) => (
                       <SwiperSlide key={image.id}>
                         <button
-                          onClick={() => setActiveImage(image)}
+                          onClick={() => setCurrentIndex(index)}
                           className={`${
-                            activeImage.id === image.id
+                            currentIndex === index
                               ? `border border-green-500`
                               : ` `
                           }`}
@@ -120,19 +108,13 @@ export default function ThumbsGallery({ data }) {
                     "--swiper-pagination-color": "#000",
                   }}
                   ref={swiperRef}
-                  loop={true}
                   spaceBetween={10}
                   // navigation={true}
+                  initialSlide={currentIndex}
+                  onActiveIndexChange={updateIndex}
                   thumbs={{ swiper: thumbsSwiper }}
                   modules={[FreeMode, Navigation, Thumbs]}
-                  onSlideChange={() => {
-                    handleMainSwiperSlideChange;
-                    console.log(
-                      handleMainSwiperSlideChange,
-                      "handleMainSwiperSlideChange"
-                    );
-                    console.log("slide change");
-                  }}
+                  onSlideChange={console.log("slide change")}
                   className="mySwiper2"
                 >
                   {data &&
