@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 import { FreeMode, Navigation, Thumbs, Pagination } from "swiper/modules";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 
-export default function ThumbsMobile({ data }) {
+export default function ThumbsMobile({ data, images }) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [galleryNavOpen, setGalleryNavOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -57,8 +57,8 @@ export default function ThumbsMobile({ data }) {
           modules={[Pagination]}
           className="mySwiper"
         >
-          {data &&
-            data.images.map((item) => {
+          {images &&
+            images.map((item) => {
               return (
                 <SwiperSlide key={item.id}>
                   <button onClick={openGalleryNav}>
@@ -92,8 +92,8 @@ export default function ThumbsMobile({ data }) {
                 onSlideChange={() => console.log("slide change")}
                 className="mySwiper2"
               >
-                {data &&
-                  data.images.map((image) => (
+                {images &&
+                  images.map((image) => (
                     <SwiperSlide key={image.id}>
                       <div>
                         <img src={image.image} className="" />
@@ -131,15 +131,13 @@ export default function ThumbsMobile({ data }) {
                 modules={[FreeMode, Navigation, Thumbs]}
                 className="mySwiper h-full col-span-1 "
               >
-                {data &&
-                  data.images.map((image, index) => (
+                {images &&
+                  images.map((image, index) => (
                     <SwiperSlide key={image.id}>
                       <button
                         onClick={() => setCurrentIndex(index)}
                         className={`${
-                          currentIndex === index
-                            ? `border border-green-500`
-                            : ` `
+                          currentIndex === index ? `opacity-100` : `opacity-20`
                         }`}
                       >
                         <img

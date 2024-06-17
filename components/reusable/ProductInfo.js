@@ -16,7 +16,7 @@ import { ChevronDown } from "lucide-react";
 import { useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function ProductInfo({ data }) {
+export default function ProductInfo({ data, images }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const path = usePathname();
@@ -74,9 +74,9 @@ export default function ProductInfo({ data }) {
   };
 
   return (
-    <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-5 items-start justify-center gap-x-10 p-4">
-      <div className=" col-span-1 md:col-span-3">
-        <ThumbsGallery data={data} />
+    <div className="w-full h-full mx-auto grid grid-cols-1 md:grid-cols-5 items-start justify-center gap-x-10 p-4">
+      <div className=" col-span-1 md:col-span-3 w-full h-full">
+        <ThumbsGallery data={data} images={images} />
       </div>
       <div className=" w-full mx-auto flex flex-col gap-8 items-start justify-center col-span-1 md:col-span-2 ">
         <div className=" flex flex-col gap-2 w-full">

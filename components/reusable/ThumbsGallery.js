@@ -11,7 +11,7 @@ import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 import ThumbsMobile from "./ThumbsMobile";
 
-export default function ThumbsGallery({ data }) {
+export default function ThumbsGallery({ data, images }) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [galleryNavOpen, setGalleryNavOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -49,10 +49,10 @@ export default function ThumbsGallery({ data }) {
 
   return (
     <>
-      <div className="hidden md:block">
+      <div className="hidden md:block space-y-2  w-full h-full">
         <div className="grid grid-cols-2 gap-x-2 gap-y-2 items-center justify-center col-span-3 w-full">
-          {data &&
-            data.images.map((item) => {
+          {images &&
+            images.map((item) => {
               return (
                 <div key={item.id}>
                   <button onClick={openGalleryNav}>
@@ -64,7 +64,7 @@ export default function ThumbsGallery({ data }) {
         </div>
 
         <div
-          className={` bg-black bg-opacity-40 fixed top-0  bottom-0 left-0 right-0   z-[999] w-full ${
+          className={` bg-black bg-opacity-40 fixed top-0  bottom-0 left-0 right-0 -translate-y-2   z-[999] w-full h-full ${
             galleryNavOpen ? "block " : "hidden"
           } `}
         >
@@ -78,18 +78,31 @@ export default function ThumbsGallery({ data }) {
                   slidesPerView={7}
                   freeMode={true}
                   watchSlidesProgress={true}
+                  // autoplay={true}
+                  // breakpoints={{
+                  //   // Show only 1 image on small screens
+                  //   0: {
+                  //     slidesPerView: 6,
+                  //     direction: "horizontal",
+                  //   },
+                  //   // Show 6 images and vertical direction on larger screens
+                  //   768: {
+                  //     slidesPerView: 6,
+                  //     direction: "vertical",
+                  //   },
+                  // }}
                   modules={[FreeMode, Navigation, Thumbs]}
                   className="mySwiper h-full col-span-1 "
                 >
-                  {data &&
-                    data.images.map((image, index) => (
+                  {images &&
+                    images.map((image, index) => (
                       <SwiperSlide key={image.id}>
                         <button
                           onClick={() => setCurrentIndex(index)}
                           className={`${
                             currentIndex === index
-                              ? `border border-green-500`
-                              : ` `
+                              ? `opacity-100`
+                              : `opacity-20`
                           }`}
                         >
                           <img
@@ -113,12 +126,13 @@ export default function ThumbsGallery({ data }) {
                   initialSlide={currentIndex}
                   onActiveIndexChange={updateIndex}
                   thumbs={{ swiper: thumbsSwiper }}
+                  // autoplay={true}
                   modules={[FreeMode, Navigation, Thumbs]}
                   onSlideChange={console.log("slide change")}
                   className="mySwiper2"
                 >
-                  {data &&
-                    data.images.map((image) => (
+                  {images &&
+                    images.map((image) => (
                       <SwiperSlide key={image.id}>
                         <div>
                           <img src={image.image} className="w-full h-full" />
@@ -152,7 +166,7 @@ export default function ThumbsGallery({ data }) {
         </div>
       </div>
       <div className=" block md:hidden">
-        <ThumbsMobile data={data} />
+        <ThumbsMobile data={data} images={images} />
       </div>
     </>
   );

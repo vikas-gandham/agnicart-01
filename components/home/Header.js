@@ -76,19 +76,19 @@ export default function Header({ menu }) {
             </div>
           </div>
         </div>
-        
+
         <Menu items={menu.theme_settings.mainmenu.items} />
       </div>
       <div
         className={`${
           top ? `block fixed top-0 right-0 left-0` : `hidden `
-        } bg-white z-[10000] shadow-md pb-2`}
+        } bg-white z-[888] shadow-md pb-2`}
       >
         <div className="flex items-center justify-between px-4 ">
           <Link href="/">
             <img src="/logo.png" alt="" width="150" />
           </Link>
-          <Menu items={menu.theme_settings.mainmenu.items} />
+          <Menu items={menu.theme_settings.mainmenu.items}  />
           <SideNav />
         </div>
       </div>
