@@ -3,10 +3,10 @@
 import Link from "next/link";
 import Menu from "./Menu";
 import SideNav from "./SideNav";
-import SearchNav from "../reusable/SearchNav";
-import AccountNav from "../reusable/AccountNav";
+import SearchNav from "../reusable/navigation/SearchNav";
+import AccountNav from "../reusable/navigation/AccountNav";
 import { PiBagLight } from "react-icons/pi";
-import MenuSlide from "../reusable/MenuSlide";
+import MenuSlide from "../reusable/navigation/MenuSlide";
 import { useEffect, useState } from "react";
 
 export default function Header({ menu }) {

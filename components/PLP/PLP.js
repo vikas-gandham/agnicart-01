@@ -10,7 +10,7 @@ export default function PLP({ products, filters }) {
         <Filters filters={filters} />
         <ShowProducts
           count={products && products.count}
-          products={
+          productsData={
             products && products.results.length > 0 ? products.results : []
           }
         />

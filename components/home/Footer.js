@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-import FooterLinks from "../reusable/FooterLinks";
-import Media from "../reusable/Media";
-import FooterAccordian from "../reusable/FooterAccordian";
+import FooterLinks from "../reusable/footer/FooterLinks";
+import Media from "../reusable/footer/Media";
+import FooterAccordian from "../reusable/footer/FooterAccordian";
 
 export default function Footer() {
   const men = [

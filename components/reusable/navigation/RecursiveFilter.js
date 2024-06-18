@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Accordion from "./Accordian";
+import Accordion from "../filters/Accordian";
 import { LiaFilterSolid } from "react-icons/lia";
 import { CiSearch } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";

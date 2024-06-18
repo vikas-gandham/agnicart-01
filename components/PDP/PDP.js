@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ProductInfo from "../reusable/ProductInfo";
+import ProductInfo from "../reusable/products/ProductInfo";
 
 const assignImages = (images, selected_variant_options) => {
   let productImages = [...images];
@@ -24,6 +24,7 @@ const assignImages = (images, selected_variant_options) => {
         image: selected_variant_options.image,
         thumbnail: selected_variant_options.image,
       });
+      9;
     }
   }
   return productImages;

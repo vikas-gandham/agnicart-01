@@ -1,12 +1,30 @@
 "use client";
-import { usePathname, useSearchParams } from "next/navigation";
-import Product from "../reusable/Product";
-import Pagination from "rc-pagination";
-import "rc-pagination/assets/index.css";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import Product from "../reusable/products/Product";
+import GenericPagination from "../reusable/pagination/GenericPagination";
+import { useEffect, useState } from "react";
 
-export default function ShowProducts({ products, count }) {
+export async function getPaginationData(url) {
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      const errorData = await response.json();
+      return errorData;
+    }
+  } catch (error) {
+    console.error("Error fetching product data:", error);
+    return error;
+  }
+}
+
+export default function ShowProducts({
+  productsData,
+  count,
+  previousURL,
+  nextURL,
+}) {
   // const productList = [
   //   {
   //     pid: "3fd0124f",
@@ -130,22 +148,44 @@ export default function ShowProducts({ products, count }) {
   //   },
   // ];
 
-  const router = useRouter();
-  const path = usePathname();
-  const searchParams = useSearchParams();
-  const page = searchParams.get("page");
+  const [products, setProducts] = useState(productsData || []);
+  const [isLoading, setIsLoading] = useState(false);
+  const [next, setNext] = useState(nextURL || null);
+  const [previous, setPrevious] = useState(previousURL || null);
+  const [isInfiniteScrollEnabled, setIsInfiniteScrollEnabled] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const params = new URLSearchParams(searchParams);
+  useEffect(() => {
+    setProducts(productsData || []);
+    setNext(nextURL || null);
+    setPrevious(previousURL || null);
+  }, [productsData, previousURL, nextURL, count]);
 
-  const handlePageChange = (event) => {
-    const newQuery = { ...searchParams };
-    if (event) {
-      newQuery.page = Number(event);
-    } else {
-      newQuery.page = 1;
+  const handlePagination = async (type, options) => {
+    const direction = options;
+    setIsLoading(true);
+    setIsInfiniteScrollEnabled(false);
+
+    let url;
+    if (direction === "next" && next) {
+      url = next;
+    } else if (direction === "previous" && previous) {
+      url = previous;
     }
-    params.set("page", newQuery.page);
-    router.push(`${path}?${params.toString()}`);
+
+    if (url) {
+      const { data, errors } = await getPaginationData(url);
+      if (errors) {
+        console.error("Error fetching paginated data:", errors);
+      } else {
+        setProducts(data.results);
+        setNext(data.next);
+        setPrevious(data.previous);
+        setCurrentPage(data.currentPage);
+      }
+    }
+
+    setIsLoading(false);
   };
 
   return (
@@ -169,14 +209,21 @@ export default function ShowProducts({ products, count }) {
           </h1>
         )}
       </div>
-      <div className="w-full flex items-center justify-center gap-10 p-20">
-        <Pagination
-          pageSize={20}
-          current={page ? Number(page) : 1}
-          total={Number(count)}
-          onChange={handlePageChange}
-        />
-      </div>
+      <GenericPagination
+        handlePagination={handlePagination}
+        isLoading={isLoading}
+        hasPrevious={previous !== null}
+        hasNext={next !== null}
+        products={products}
+        count={count}
+        setNext={setNext}
+        next={next}
+        type="NEXT_AND_PREVIOUS"
+        isInfiniteScrollEnabled={isInfiniteScrollEnabled}
+        setIsInfiniteScrollEnabled={setIsInfiniteScrollEnabled}
+        setProducts={setProducts}
+        current={currentPage}
+      />
     </div>
   );
 }

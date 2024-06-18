@@ -1,6 +1,6 @@
-import Accordion from "../reusable/Accordian";
+import Accordion from "../reusable/filters/Accordian";
 import { CiSearch } from "react-icons/ci";
-import RecursiveFilter from "../reusable/RecursiveFilter";
+import RecursiveFilter from "../reusable/navigation/RecursiveFilter";
 
 export default function Filters({ filters }) {
   return (
