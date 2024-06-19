@@ -5,17 +5,15 @@ import { useEffect, useState } from "react";
 
 export async function getPaginationData(url) {
   try {
-    const response = await fetch(url);
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      const errorData = await response.json();
-      return errorData;
-    }
+    const res = await fetch(url);
+    if (!res.ok)
+      throw new Error("Something went wrong with fetching product data ");
+    const data = await res.json();
+    return data;
   } catch (error) {
-    console.error("Error fetching product data:", error);
-    return error;
+    if (error.name !== "AbortError") {
+      console.log(error.message);
+    }
   }
 }
 
@@ -161,7 +159,7 @@ export default function ShowProducts({
     setPrevious(previousURL || null);
   }, [productsData, previousURL, nextURL, count]);
 
-  const handlePagination = async (type, options) => {
+  const handlePagination = async (options) => {
     const direction = options;
     setIsLoading(true);
     setIsInfiniteScrollEnabled(false);
@@ -174,15 +172,12 @@ export default function ShowProducts({
     }
 
     if (url) {
-      const { data, errors } = await getPaginationData(url);
-      if (errors) {
-        console.error("Error fetching paginated data:", errors);
-      } else {
-        setProducts(data.results);
-        setNext(data.next);
-        setPrevious(data.previous);
-        setCurrentPage(data.currentPage);
-      }
+      const data = await getPaginationData(url);
+
+      setProducts(data.results);
+      setNext(data.next);
+      setPrevious(data.previous);
+      setCurrentPage(data.currentPage);
     }
 
     setIsLoading(false);
@@ -218,7 +213,7 @@ export default function ShowProducts({
         count={count}
         setNext={setNext}
         next={next}
-        type="NEXT_AND_PREVIOUS"
+        type="NUMBERED"
         isInfiniteScrollEnabled={isInfiniteScrollEnabled}
         setIsInfiniteScrollEnabled={setIsInfiniteScrollEnabled}
         setProducts={setProducts}
