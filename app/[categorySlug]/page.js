@@ -1,20 +1,18 @@
 import PLP from "@/components/PLP/PLP";
 
-async function getProductsData(searchParams, params) {
+async function getProductsData(searchParams) {
   const { page } = searchParams;
-  console.log(params, "params");
   try {
     const res = await fetch(
       `https://devapi.agnicart.com/api/stores/8e23257b/products/?variants=${
         searchParams.variants || ""
-      }&page=${page || 1}&page_size=20`
+      }&page=${page || 1}`
     );
 
     // &${page && `page=${page}`}
 
     if (!res.ok) throw new Error("Something went wrong with fetching Api");
     const data = await res.json();
-    console.log(data, "hvgyuguigh");
     return data;
   } catch (error) {
     if (error.name !== "AbortError") {
@@ -40,7 +38,6 @@ async function getFiltersData() {
 
 export default async function Page(props) {
   const { searchParams, params } = props;
-  console.log(props, "props");
   const products = await getProductsData(searchParams, params);
   const filters = await getFiltersData();
   return (
