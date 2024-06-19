@@ -1,9 +1,8 @@
-import { getPaginationData } from "@/components/PLP/PLP";
+import { getPaginationData } from "@/components/PLP/ShowProducts";
 import { useEffect, useState } from "react";
 
 export default function OnScrollPagination(props) {
-  const { next, setNext, isInfiniteScrollEnabled, setProducts, product } =
-    props;
+  const { next, setNext, isInfiniteScrollEnabled, setProducts } = props;
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -19,21 +18,19 @@ export default function OnScrollPagination(props) {
         document.documentElement.offsetHeight - scrollThreshold;
       if (scrolledToBottom) {
         setIsLoading(true);
-        const { data, errors } = await getPaginationData(next);
-        if (errors) {
-          console.error("Error fetching paginated data:", errors);
-        } else {
-          setProducts((prevProducts) => [...prevProducts, ...data.results]);
-          setNext(data.next);
-        }
+        const data = await getPaginationData(next);
+
+        setProducts((prevProducts) => [...prevProducts, ...data.results]);
+        setNext(data.next);
+
         setIsLoading(false);
       }
     }
   };
 
   return (
-    <div className="text-center">
-      {isLoading && <div className="loading">Loading..</div>}
+    <div className="text-center pt-20">
+      {isLoading && <div className=" font-semibold text-lg">Loading...</div>}
     </div>
   );
 }
