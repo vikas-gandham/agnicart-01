@@ -16,6 +16,7 @@ export default function NextAndPrevious({
   useEffect(() => {
     if (searchParams.has("page")) {
       const page = parseInt(searchParams.get("page")) || 1;
+
       setCurrentPage(page);
     } else {
       setCurrentPage(1);
@@ -36,23 +37,23 @@ export default function NextAndPrevious({
 
     router.push(`${path}?${newSearchParams.toString()}`);
 
-    handlePagination(direction, direction);
+    handlePagination(direction);
   };
 
   return (
     <div className="flex justify-center text-center space-x-4 pt-20">
       <button
         onClick={() => handleClick("previous")}
-        // disabled={isLoading || !hasPrevious}
-        className="text-black border p-2 px-5 py-2 font-semibold flex items-center justify-center gap-1 rounded-md bg-gray-200 w-[150px] "
+        disabled={isLoading || !hasPrevious}
+        className="text-black border p-2 px-5 py-2 font-semibold flex items-center justify-center gap-1 rounded-md bg-white shadow-md w-[150px] "
       >
         <ArrowBigLeft className="text-black" />
         {isLoading ? "Loading" : "Previous"}
       </button>
       <button
         onClick={() => handleClick("next")}
-        // disabled={isLoading || !hasNext}
-        className="text-black border p-2 px-5 py-2 font-semibold flex items-center justify-center gap-1 rounded-md bg-gray-200 w-[150px]"
+        disabled={isLoading || !hasNext}
+        className="text-black border  px-5 py-2 font-semibold flex items-center justify-center gap-1 rounded-md bg-white shadow-md w-[150px]"
       >
         {isLoading ? "Loading" : "Next"}
         <ArrowBigRight className="text-black" />
