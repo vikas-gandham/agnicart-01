@@ -5,17 +5,17 @@ export default function LoadMorePagination({
 }) {
   const handleClick = () => {
     if (!isLoading && hasNext) {
-      handlePagination("LOADMORE", "next");
+      handlePagination("next");
     }
   };
   return (
-    <div className="text-center">
+    <div className="text-center pt-20">
       <button
         onClick={handleClick}
         disabled={isLoading || !hasNext}
-        className="text-black border p-2 font-semibold"
+        className="text-black border  px-5 py-2 font-semibold rounded-md bg-white shadow-md w-[150px]"
       >
-        {isLoading ? "Loading" : "Load More"}
+        {isLoading ? "Loading..." : "Load More"}
       </button>
     </div>
   );
