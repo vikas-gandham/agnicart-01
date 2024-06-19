@@ -1,6 +1,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Pagination from "rc-pagination";
 import "rc-pagination/assets/index.css";
+import { useEffect, useState } from "react";
 
 export default function NumberPagination({ count }) {
   const router = useRouter();
@@ -8,6 +9,11 @@ export default function NumberPagination({ count }) {
   const searchParams = useSearchParams();
   const page = searchParams.get("page");
   const params = new URLSearchParams(searchParams);
+  const itemsPerPage = 20;
+  const [pageCount, setPageCount] = useState(0);
+  useEffect(() => {
+    setPageCount(Math.ceil(count / itemsPerPage));
+  }, [itemsPerPage, page, count]);
 
   //   const handleClick = (newPage:any) => {
 
@@ -32,7 +38,8 @@ export default function NumberPagination({ count }) {
   return (
     <div className="w-full flex items-center justify-center gap-10 p-20">
       <Pagination
-        pageSize={20}
+        // pageSize={pageCount}
+        pageSize={itemsPerPage}
         current={page ? Number(page) : 1}
         total={Number(count)}
         onChange={handleClick}
